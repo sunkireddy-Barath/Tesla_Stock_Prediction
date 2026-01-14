@@ -1,64 +1,150 @@
-﻿# Tesla Stock Prediction using LSTM
+🚗 Tesla Stock Price Prediction using LSTM
 
-This project utilizes a Long Short-Term Memory (LSTM) model to predict Tesla (TSLA) stock prices based on historical data. The dataset contains daily stock prices and trading volume from Yahoo Finance, and the project aims to model the future prices using deep learning techniques.
+GitHub ID: sunkireddy-Barath
 
-## Project Overview
+📌 Project Description
 
-This notebook demonstrates the following steps for predicting Tesla's stock prices:
+This project focuses on predicting Tesla (TSLA) stock prices using a Deep Learning–based Long Short-Term Memory (LSTM) network.
+LSTM models are well suited for time-series forecasting as they can learn long-term dependencies from historical data.
 
-1. **Data Loading**: The dataset is sourced from Yahoo Finance and includes parameters like Open, High, Low, Close, Adjusted Close, and Volume. These are essential features that help represent the stock's price movement over time.
+The model is trained on historical Tesla stock market data to forecast future closing prices and analyze market trends.
 
-2. **Feature Explanation**:
-    - **Open (O)**: The stock price at the opening of the market for a specific period.
-    - **High (H)**: The highest price the stock reached during the period.
-    - **Low (L)**: The lowest price the stock reached during the period.
-    - **Close (C)**: The stock price at the closing of the market for a specific period.
-    - **Adjusted Close (Adj Close)**: The closing price adjusted for dividends or stock splits.
-    - **Volume**: The total number of shares traded during the period, which represents the stock's liquidity.
+🎯 Project Objectives
 
-3. **Preprocessing**: Data preprocessing techniques are applied to clean the dataset and prepare it for training, including normalization and sequence creation for the LSTM model.
+Understand and apply LSTM networks for time-series forecasting
 
-4. **Model Architecture**: 
-    - An LSTM network is employed for this task due to its ability to capture long-term dependencies in time-series data.
-    - The model predicts future stock prices based on the historical data provided.
+Preprocess real-world stock market data
 
-5. **Evaluation**: The performance of the model is evaluated using metrics such as Mean Squared Error (MSE) to assess the accuracy of the predictions.
+Train and evaluate a deep learning model
 
-## Dataset
+Visualize predicted vs actual stock prices
 
-The dataset used in this project is sourced from Yahoo Finance and can be accessed [here](https://finance.yahoo.com/quote/TSLA/history?period1=1277856000&period2=1703980800&interval=1d&filter=history&frequency=1d&includeAdjustedClose=true).
+Gain hands-on experience with financial data analysis using DL
 
-## Steps to Run the Project
+📂 Dataset Information
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/bimarakajati/tesla-stock-prediction.git
-   ```
+Stock: Tesla Inc. (TSLA)
 
-2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Source: Yahoo Finance
 
-3. Run the Jupyter notebook:
-   ```bash
-   jupyter notebook TSLA_Stock_LSTM.ipynb
-   ```
+Data Type: Daily historical stock prices
 
-## Libraries Used
+Features Included:
 
-- TensorFlow/Keras
-- NumPy
-- Pandas
-- Matplotlib
-- Scikit-learn
+Open – Price at market opening
 
-## Results
+High – Highest price during the day
 
-The LSTM model successfully captures the trend in Tesla stock prices, and the performance can be further tuned by experimenting with different model architectures, features, and hyperparameters.
+Low – Lowest price during the day
 
-## Future Work
+Close – Price at market closing (target variable)
 
-- Implementing additional models for comparison (e.g., GRU, ARIMA).
-- Enhancing the feature set with technical indicators like moving averages, RSI, etc.
-- Deploying the model for real-time prediction.
+Adjusted Close – Close price adjusted for splits/dividends
+
+Volume – Number of shares traded
+
+📌 The dataset is included directly in the repository as a CSV file.
+
+🧠 Methodology
+1️⃣ Data Preprocessing
+
+Handle missing values
+
+Select relevant features
+
+Normalize data using MinMaxScaler
+
+Convert data into time-series sequences suitable for LSTM
+
+2️⃣ Model Architecture
+
+LSTM-based Deep Learning model
+
+Learns temporal patterns from historical price data
+
+Designed to predict future closing prices
+
+3️⃣ Model Training
+
+Dataset split into training and testing sets
+
+Model trained using backpropagation
+
+Loss function used: Mean Squared Error (MSE)
+
+4️⃣ Model Evaluation
+
+Evaluation Metrics:
+
+Mean Squared Error (MSE)
+
+Root Mean Squared Error (RMSE)
+
+Visual comparison of:
+
+Actual vs Predicted Stock Prices
+
+🛠️ Technologies & Libraries Used
+
+Python
+
+TensorFlow / Keras
+
+NumPy
+
+Pandas
+
+Matplotlib
+
+Scikit-learn
+
+Jupyter Notebook
+
+▶️ How to Run the Project
+1️⃣ Clone the Repository
+git clone https://github.com/sunkireddy-Barath/tesla-stock-prediction-lstm.git
+
+2️⃣ Install Dependencies
+pip install -r requirements.txt
+
+3️⃣ Run the Notebook
+jupyter notebook
+
+
+Open the notebook file and run all cells sequentially.
+
+📊 Results & Observations
+
+The LSTM model successfully captures trend patterns in Tesla stock prices
+
+Predictions closely follow actual closing prices for short-term forecasting
+
+Model performance can be improved with more features and tuning
+
+⚠️ Limitations
+
+Stock prices are influenced by external factors such as:
+
+News
+
+Market sentiment
+
+Economic conditions
+
+The model relies only on historical price data
+
+Not suitable for long-term or real-time trading decisions
+
+🔮 Future Enhancements
+
+Add technical indicators (RSI, MACD, Moving Averages)
+
+Integrate news or sentiment analysis
+
+Compare with other models (GRU, ARIMA)
+
+Deploy as a web application for live prediction
+
+📌 Conclusion
+
+This project demonstrates how Deep Learning (LSTM) can be effectively applied to financial time-series forecasting. It provides practical experience in data preprocessing, neural network modeling, and performance evaluation using real-world stock market data.
