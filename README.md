@@ -108,14 +108,14 @@ Tesla_Stock_Prediction/
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                    TESLA STOCK PREDICTION SYSTEM                        │
 │                                                                         │
-│  ┌──────────┐    ┌──────────────┐    ┌───────────────┐    ┌─────────┐  │
-│  │  RAW     │    │    DATA      │    │ DEEP LEARNING │    │ OUTPUT  │  │
-│  │  DATA    │───▶│  PIPELINE    │───▶│    ENGINE     │───▶│  LAYER  │  │
-│  │  LAYER   │    │    LAYER     │    │    LAYER      │    │         │  │
-│  └──────────┘    └──────────────┘    └───────────────┘    └─────────┘  │
-│   TSLA.csv        Preprocessing       LSTM Model          Predictions  │
-│   3400 rows       Windowing           Training            Recursive    │
-│   7 columns       Splitting           Evaluation          Export       │
+│  ┌──────────┐    ┌──────────────┐    ┌───────────────┐    ┌─────────┐   │
+│  │  RAW     │    │    DATA      │    │ DEEP LEARNING │    │ OUTPUT  │   │
+│  │  DATA    │───▶│  PIPELINE    │───▶│    ENGINE     │───▶│  LAYER  │   │
+│  │  LAYER   │    │    LAYER     │    │    LAYER      │    │         │   │
+│  └──────────┘    └──────────────┘    └───────────────┘    └─────────┘   │
+│   TSLA.csv        Preprocessing       LSTM Model          Predictions   │
+│   3400 rows       Windowing           Training            Recursive     │
+│   7 columns       Splitting           Evaluation          Export        │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -235,7 +235,7 @@ INPUT SEQUENCE — 3 trading days × 1 price value
 ┌──────────────────────────────────────────────────┐
 │  Timestep 1      Timestep 2      Timestep 3      │
 │  [day t-3]       [day t-2]       [day t-1]       │
-│  e.g: 239.37     242.64          243.84           │
+│  e.g: 239.37     242.64          243.84          │
 └──────────────────────────────────────────────────┘
                         │
                         │  Shape: (batch, 3, 1)
@@ -250,10 +250,10 @@ INPUT SEQUENCE — 3 trading days × 1 price value
 │                 LSTM Layer                       │
 │                 64 units                         │
 │                                                  │
-│  ┌───────────┐  ┌───────────┐  ┌───────────┐    │
-│  │  Cell 1   │─▶│  Cell 2   │─▶│  Cell 3   │    │
-│  │ timestep 1│  │ timestep 2│  │ timestep 3│    │
-│  └───────────┘  └───────────┘  └─────┬─────┘    │
+│  ┌───────────┐  ┌───────────┐  ┌───────────┐     │
+│  │  Cell 1   │─▶│  Cell 2   │─▶│  Cell 3   │     │
+│  │ timestep 1│  │ timestep 2│  │ timestep 3│     │
+│  └───────────┘  └───────────┘  └─────┬─────┘     │
 │                                      │           │
 │  Each cell has:                      │           │
 │  • Forget gate  — erase old memory   │           │
@@ -319,33 +319,33 @@ One LSTM Cell (unrolled across 3 timesteps):
               │
               ▼
  x(t) ──▶  ┌──────────────────────────────────────────────┐
-            │                 LSTM CELL                    │
-            │                                              │
-            │  ┌──────────┐                                │
-            │  │ sigmoid  │  Forget Gate                   │
-            │  │    ft    │◀── concat[h(t-1), x(t)] + bias │
+            │                 LSTM CELL                   │
+            │                                             │
+            │  ┌──────────┐                               │
+            │  │ sigmoid  │  Forget Gate                  │
+            │  │    ft    │◀── concat[h(t-1), x(t)] + bias│
             │  └────┬─────┘  "What % of c(t-1) to keep?"  │
-            │       │   ft ∈ [0, 1]                        │
-            │  ┌────▼─────┐  ┌──────────┐                  │
-            │  │     ×    │  │ sigmoid  │  Input Gate      │
-            │  └────┬─────┘  │    it    │                  │
-            │       │        └────┬─────┘                  │
-            │       │        ┌────▼─────┐                  │
-            │  ┌────▼─────┐  │  tanh    │  Candidate State │
+            │       │   ft ∈ [0, 1]                       │
+            │  ┌────▼─────┐  ┌──────────┐                 │
+            │  │     ×    │  │ sigmoid  │  Input Gate     │
+            │  └────┬─────┘  │    it    │                 │
+            │       │        └────┬─────┘                 │
+            │       │        ┌────▼─────┐                 │
+            │  ┌────▼─────┐  │  tanh    │  Candidate State│
             │  │     +    │◀─│   g̃(t)  │                  │
-            │  └────┬─────┘  └──────────┘                  │
-            │       │                                      │
-            │   c(t) = ft ⊗ c(t-1)  +  it ⊗ g̃(t)         │
-            │   (updated long-term cell state)             │
-            │       │                                      │
-            │  ┌────▼─────┐  ┌──────────┐                  │
-            │  │  tanh     │  │ sigmoid  │  Output Gate    │
-            │  └────┬─────┘  │    ot    │                  │
-            │       │        └────┬─────┘                  │
-            │  ┌────▼─────┐       │                        │
-            │  │     ×    │◀──────┘                        │
-            │  └────┬─────┘                                │
-            └───────┼──────────────────────────────────────┘
+            │  └────┬─────┘  └──────────┘                 │
+            │       │                                     │
+            │   c(t) = ft ⊗ c(t-1)  +  it ⊗ g̃(t)          │
+            │   (updated long-term cell state)            │
+            │       │                                     │
+            │  ┌────▼─────┐  ┌──────────┐                 │
+            │  │  tanh     │  │ sigmoid  │  Output Gate   │
+            │  └────┬─────┘  │    ot    │                 │
+            │       │        └────┬─────┘                 │
+            │  ┌────▼─────┐       │                       │
+            │  │     ×    │◀──────┘                       │
+            │  └────┬─────┘                               │
+            └───────┼─────────────────────────────────────┘
                     │
              h(t) = ot ⊗ tanh(c(t))
              (output hidden state passed to next cell and Dense layers)
@@ -448,15 +448,15 @@ EPOCH  (repeated 100 times):
        ▼
 ┌───────────────────────────────────────────────────────┐
 │   FORWARD PASS                                        │
-│   Input ──▶ LSTM(64) ──▶ Dense(32) ──▶ Dense(32)     │
+│   Input ──▶ LSTM(64) ──▶ Dense(32) ──▶ Dense(32)      │
 │          ──▶ Dense(1)  ──▶  predicted price ŷ         │
 └───────────────────────┬───────────────────────────────┘
                         │
                         ▼
 ┌───────────────────────────────────────────────────────┐
 │   LOSS CALCULATION                                    │
-│   MSE = (1/n) × Σ (y_actual − y_pred)²               │
-│   MAE = (1/n) × Σ |y_actual − y_pred|  (displayed)   │
+│   MSE = (1/n) × Σ (y_actual − y_pred)²                │
+│   MAE = (1/n) × Σ |y_actual − y_pred|  (displayed)    │
 └───────────────────────┬───────────────────────────────┘
                         │
                         ▼
@@ -471,11 +471,11 @@ EPOCH  (repeated 100 times):
 ┌───────────────────────────────────────────────────────┐
 │   ADAM OPTIMIZER  (lr = 0.001)                        │
 │                                                       │
-│   m_t = β1·m(t-1) + (1−β1)·gradient    β1=0.9        │
-│   v_t = β2·v(t-1) + (1−β2)·gradient²   β2=0.999      │
-│   m̂_t = m_t  / (1 − β1^t)   ← bias correction        │
-│   v̂_t = v_t  / (1 − β2^t)   ← bias correction        │
-│   w   = w − lr × m̂_t / (√v̂_t + ε)    ε=1e-7         │
+│   m_t = β1·m(t-1) + (1−β1)·gradient    β1=0.9         │
+│   v_t = β2·v(t-1) + (1−β2)·gradient²   β2=0.999       │
+│   m̂_t = m_t  / (1 − β1^t)   ← bias correction         │
+│   v̂_t = v_t  / (1 − β2^t)   ← bias correction         │
+│   w   = w − lr × m̂_t / (√v̂_t + ε)    ε=1e-7           │
 └───────────────────────┬───────────────────────────────┘
                         │
                    85 batches done
@@ -485,7 +485,7 @@ EPOCH  (repeated 100 times):
 │   VALIDATION CHECK  (end of each epoch)               │
 │   Run X_val through model — no weight updates         │
 │   Report: val_loss, val_mae                           │
-│   Detect overfitting: train_loss↓ + val_loss↑ = BAD  │
+│   Detect overfitting: train_loss↓ + val_loss↑ = BAD   │
 └───────────────────────────────────────────────────────┘
                   (repeat 100 epochs)
 ```
@@ -535,11 +535,11 @@ OBSERVED BEHAVIOUR:
 │                                                               │
 │  LSTM Layer (64 units, input_dim=1):                          │
 │  ┌─────────────────────────────────────────────────────────┐  │
-│  │  Input weights:     4 × (64 × 1)  =       256          │  │
-│  │  Recurrent weights: 4 × (64 × 64) =    16,384          │  │
-│  │  Biases:            4 × 64        =       256          │  │
-│  │                                   ───────────          │  │
-│  │  Subtotal:                         16,896              │  │
+│  │  Input weights:     4 × (64 × 1)  =       256          │   │
+│  │  Recurrent weights: 4 × (64 × 64) =    16,384          │   │
+│  │  Biases:            4 × 64        =       256          │   │
+│  │                                   ───────────          │   │
+│  │  Subtotal:                         16,896              │   │
 │  └─────────────────────────────────────────────────────────┘  │
 │                                                               │
 │  Dense Layer 1  (64 → 32, ReLU):                              │
@@ -566,10 +566,10 @@ OBSERVED BEHAVIOUR:
 │  │  Subtotal:           33                                 │  │
 │  └─────────────────────────────────────────────────────────┘  │
 │                                                               │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
-│  GRAND TOTAL:  16,896 + 2,080 + 1,056 + 33  =  20,065        │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    │
+│  GRAND TOTAL:  16,896 + 2,080 + 1,056 + 33  =  20,065         │
 │  Model file size on disk: ~78 KB                              │
-│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  │
+│  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━    │
 └───────────────────────────────────────────────────────────────┘
 ```
 
